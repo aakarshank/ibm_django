@@ -63,17 +63,21 @@
                 <div class="card-body">
                     <p class="card-text">
                     {% for choice in question.choice_set.all %}
-                        {% if choice.id in choices %}
+                    <p>
+                        {% if choice in choices %}
                             {% if choice.is_correct %}
-                            <span style="color: green;">Correct answer: {{choice.text}}</span>
+                            <span style="color: green;">Correct answer: {{choice.choice}}</span>
                             {% else %}
-                            <span style="color: red;">Wrong answer: {{choice.text}}</span>
+                            <span style="color: red;">Wrong answer: {{choice.choice}}</span>
                             {% endif %}
                         {% else %}
                             {% if choice.is_correct %}
-                                <span style="color: orange;">Not Selected: {{choice.text}}</span>
+                                <span style="color: orange;">Not Selected: {{choice.choice}}</span>
+                            {% else %}
+                            {{choice.choice}}
                             {% endif %}
                         {% endif %}
+                    </p>
                     {% endfor %}
                     </p>
                 </div>
