@@ -39,16 +39,46 @@
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
+       <div class="alert alert-success">
+           <strong> Congratulations, {{user.name}}!</strong> 
+           You have passed the exam and completed the course with score {{score}} / {{total_score}}
+       </div>
     </div>
         {% else %}
         <div class="alert alert-danger">
             <!--HINT Display failed info -->
+            <strong> Failed</strong> 
+           Sorry, {{user.name}}! You have failed the exam with score {{score}} / {{total_score}}
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
         {% endif %}
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->
+            {% for question in course.question_set.all %}
+            <div class="card">
+                <div class="card-header border-light">
+                    <h4>{{question.text}}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                    {% for choice in question.choice_set.all %}
+                        {% if choice.id in choices %}
+                            {% if choice.is_correct %}
+                            <span style="color: green;">Correct answer: {{choice.text}}</span>
+                            {% else %}
+                            <span style="color: red;">Wrong answer: {{choice.text}}</span>
+                            {% endif %}
+                        {% else %}
+                            {% if choice.is_correct %}
+                                <span style="color: orange;">Not Selected: {{choice.text}}</span>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </body>

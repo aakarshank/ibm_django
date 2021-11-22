@@ -51,6 +51,7 @@
                     <!-- Button to toggle exam div -->
                     <button data-toggle="collapse" data-target="#exam_lesson{{lesson.pk}}" class="btn-info btn-block">Start Exam</button>
                     <div id="exam_lesson{{lesson.pk}}" class="collapse">
+                        {% if user.is_authenticated %}
                         <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
                             {% for question in lesson.question_set.all %}
                             <div class="card mt-1">
@@ -71,6 +72,9 @@
                             {% endfor %}
                             <input class="btn btn-success btn-block" type="submit" value="Submit">
                         </form>
+                        {% else %}
+                        Please login to see exam details.
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
